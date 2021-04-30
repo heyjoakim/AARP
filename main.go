@@ -5,42 +5,43 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 
 	log "github.com/sirupsen/logrus"
 )
 
-func walkFn(files *[]string, extension string) filepath.WalkFunc {
-	return func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			log.Fatalf("Error when processing walker function: %v\n", err)
-		}
+func walker(root string, extension string, exclusion string) *[]string {
+	var files []string
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+
 		if filepath.Ext(path) != extension {
 			return nil
 		}
 
-		*files = append(*files, path)
-		return nil
-	}
-}
+		if _, t := filepath.Split(path); t == exclusion {
+			return nil
+		}
 
-func walkOut(root string, extension string) {
-	var files []string
-	err := filepath.Walk(root, walkFn(&files, extension))
+		files = append(files, path)
+		return nil
+	})
+
 	if err != nil {
 		log.Fatalf("Error when walking directories: %v\n", err)
 	}
 
-	for _, f := range files {
-		fmt.Printf("%v\n", f)
-	}
-	fmt.Printf("Total number of .py files: %v\n", len(files))
+	return &files
 }
 
-func countLines(path string) (int, error) {
+func countFiles(files *[]string) {
+	fmt.Printf("Total number of .py files: %v\n", len(*files))
+}
+
+func countLines(path string) int {
 	file, err := os.Open(path)
 	if err != nil {
 		log.Errorf("Opening file causes error: %q", err)
-		return 0, nil
+		return 0
 	}
 
 	fs := bufio.NewScanner(file)
@@ -48,12 +49,24 @@ func countLines(path string) (int, error) {
 	for fs.Scan() {
 		lc++
 	}
-	return lc, nil
+	return lc
+}
+
+func extractImports(line string) {
+	x, _ := regexp.Compile(`(?m)^(?:from[ ]+(\S+)[ ]+)?import[ ]+(\S+)[ ]*$`)
+	fmt.Println(x)
+	fmt.Println(x.Match([]byte(line)))
 }
 
 func main() {
-	root := "/home/hey/git/Zeeguu-API%"
-	//extension := ".py"
-	// walkOut(root, extension)
-	countLines(root)
+	root := "/home/hey/git/Zeeguu-API"
+	extension := ".py"
+	exclusion := "__init__.py"
+	test := walker(root, extension, exclusion)
+	countFiles(test)
+
+	for _, j := range *test {
+		fmt.Println(countLines(j), j)
+	}
+	extractImports("from hest import test")
 }
