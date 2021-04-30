@@ -1,7 +1,6 @@
 # An Architecture Reconstruction Project (AARP)
 
 [![Go](https://github.com/heyjoakim/AARP/actions/workflows/build.yml/badge.svg)](https://github.com/heyjoakim/AARP/actions/workflows/build.yml)
-
 [![Go Report Card](https://goreportcard.com/badge/github.com/heyjoakim/AARP)](https://goreportcard.com/report/github.com/heyjoakim/AARP)
 
 
