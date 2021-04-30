@@ -53,9 +53,10 @@ func countLines(path string) int {
 }
 
 func extractImports(line string) {
-	x, _ := regexp.Compile(`(?m)^(?:from[ ]+(\S+)[ ]+)?import[ ]+(\S+)[ ]*$`)
+	x, _ := regexp.Compile(`^from ([a-zA-Z]+) import ([a-zA-Z]+)$`)
 	fmt.Println(x)
-	fmt.Println(x.Match([]byte(line)))
+	res := x.FindAllSubmatch([]byte(line), -1)[0][1]
+	fmt.Println(string(res))
 }
 
 func main() {
