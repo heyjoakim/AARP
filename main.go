@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -35,8 +36,24 @@ func walkOut(root string, extension string) {
 	fmt.Printf("Total number of .py files: %v\n", len(files))
 }
 
+func countLines(path string) (int, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		log.Errorf("Opening file causes error: %q", err)
+		return 0, nil
+	}
+
+	fs := bufio.NewScanner(file)
+	lc := 0
+	for fs.Scan() {
+		lc++
+	}
+	return lc, nil
+}
+
 func main() {
-	root := "/home/hey/git/Zeeguu-API"
-	extension := ".py"
-	walkOut(root, extension)
+	root := "/home/hey/git/Zeeguu-API%"
+	//extension := ".py"
+	// walkOut(root, extension)
+	countLines(root)
 }

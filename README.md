@@ -1,5 +1,8 @@
 # An Architecture Reconstruction Project (AARP)
 
+[![Go Report Card](https://goreportcard.com/badge/github.com/heyjoakim/AARP)](https://goreportcard.com/report/github.com/heyjoakim/AARP)
+
+
 The goal of the project is to recover one or more architectural views and to present them in a brief report. The audience of the report is somebody who has not seen that system before and needs to get a high-level understanding of the system.
 
 
