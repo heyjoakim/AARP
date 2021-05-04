@@ -69,5 +69,5 @@ func main() {
 	for _, j := range *test {
 		fmt.Println(countLines(j), j)
 	}
-	extractImports("from hest import test")
+	extractImports("from lol import test")
 }
