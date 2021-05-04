@@ -52,11 +52,38 @@ func countLines(path string) int {
 	return lc
 }
 
-func extractImports(line string) {
-	x, _ := regexp.Compile(`^from ([a-zA-Z]+) import ([a-zA-Z]+)$`)
-	fmt.Println(x)
-	res := x.FindAllSubmatch([]byte(line), -1)[0][1]
-	fmt.Println(string(res))
+func readLines(path string) []string {
+  var slice []string
+  file, err := os.Open(path)
+  if err != nil {
+   log.Errorf("Opening file causes error: %q\n", err)
+  }
+  fs := bufio.NewScanner(file)
+  for fs.Scan() {
+    t := extractImports(fs.Text())
+    for _, s := range t {
+     fmt.Println(s)
+     slice = append(slice, s)
+    }
+  }
+  return slice
+
+}
+
+func extractImports(line string) []string {
+  var slice []string
+	x, err := regexp.Compile(`^from ([a-zA-Z]+) import ([a-zA-Z]+)$`)
+  if err != nil {
+   log.Warnf("Error when compiling regex: %v\n", err)
+  }
+  res := x.FindAllStringSubmatch(line,-1)
+  for i:= 0; i < len(res); i++ {
+   for j := 1; j <= 2; j++ {
+    fmt.Println(res[i][j])
+    slice = append(slice, res[i][j])
+   }
+  }
+  return slice
 }
 
 func main() {
@@ -69,5 +96,7 @@ func main() {
 	for _, j := range *test {
 		fmt.Println(countLines(j), j)
 	}
-	extractImports("from lol import test")
+  //fmt.Printf("%q\n ", extractImports("from test import lol")[0][1])
+  //fmt.Println(extractImports("from test import looooooool"))
+  fmt.Println(readLines("/home/hey/git/Zeeguu-API/zeeguu_core/model/feed.py"))
 }
