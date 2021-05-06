@@ -1,0 +1,17 @@
+@startuml
+title Automated Diagram
+skinparam nodesep 100
+skinparam ranksep 100
+node tools
+node zeeguu_core
+node zeeguu_api
+node zeeguu_api_test
+node zeeguu_core_test
+tools --> zeeguu_core
+zeeguu_api --> zeeguu_core
+zeeguu_api_test --> zeeguu_core
+zeeguu_api_test --> zeeguu_core_test
+zeeguu_api_test --> zeeguu_api
+zeeguu_core --> zeeguu_api
+zeeguu_core_test --> zeeguu_core
+@enduml
