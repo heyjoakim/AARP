@@ -5,7 +5,7 @@ import (
 	"regexp"
 )
 
-func Imports(line string) (stringValue string, err error) {
+func ExtractImports(line string) (stringValue string, err error) {
 	ra := regexp.MustCompile(`^import (\S+)`)
 	rb := regexp.MustCompile(`^from (\S+)`)
 

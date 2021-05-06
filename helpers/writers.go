@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func ToSet(dependencies map[string]bool, nodes map[string]bool, k string, slice []string) (map[string]bool, map[string]bool) {
+func WriteToSet(dependencies map[string]bool, nodes map[string]bool, k string, slice []string) (map[string]bool, map[string]bool) {
 	for _, s := range slice {
 		if k != s {
 			dependencies[k+" --> "+s] = true
@@ -16,7 +16,7 @@ func ToSet(dependencies map[string]bool, nodes map[string]bool, k string, slice 
 	return dependencies, nodes
 }
 
-func ToFile(data *os.File, slice map[string]bool) {
+func WriteToOsFile(data *os.File, slice map[string]bool) {
 	for s := range slice {
 		_, err := data.WriteString(s + "\n")
 

@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func Walk(root string, extension string, exclusion string) *[]string {
+func WalkDirs(root string, extension string, exclusion string) *[]string {
 	var files []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 

@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func Lines(path string) (cr string, slice []string) {
+func ReadLines(path string) (cr string, slice []string) {
 	file, err := os.Open(path)
 	if err != nil {
 		logrus.Errorf("Opening file causes error: %q\n", err)
@@ -17,16 +17,15 @@ func Lines(path string) (cr string, slice []string) {
 	fs := bufio.NewScanner(file)
 	dir, f := filepath.Split(path)
 	f = f[:len(f)-3]
-	tttt := strings.Split(dir, "/")[5]
+	dirLevel := strings.Split(dir, "/")[5]
 	for fs.Scan() {
-		t, err := logic.Imports(fs.Text())
+		t, err := logic.ExtractImports(fs.Text())
 		if err == nil {
 			if strings.HasPrefix(t, "zeeguu") {
-				// fmt.Println(t)2or deeper level
 				slice = append(slice, strings.Split(t, ".")[0])
 			}
 		}
 	}
-	return tttt, slice
+	return dirLevel, slice
 
 }

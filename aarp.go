@@ -12,7 +12,7 @@ func main() {
 
 	extension := ".py"
 	exclusion := "__init__.py"
-	fileSlice := logic.Walk(root, extension, exclusion)
+	fileSlice := logic.WalkDirs(root, extension, exclusion)
 	helpers.CountFiles(fileSlice)
 
 	f, err := os.Create("data.wsd")
@@ -24,11 +24,11 @@ func main() {
 	nodes := make(map[string]bool)
 
 	for _, j := range *fileSlice {
-		file, imports := helpers.Lines(j)
-		dependencies, nodes = helpers.ToSet(dependencies, nodes, file, imports)
+		file, imports := helpers.ReadLines(j)
+		dependencies, nodes = helpers.WriteToSet(dependencies, nodes, file, imports)
 	}
-	helpers.ToFile(f, nodes)
-	helpers.ToFile(f, dependencies)
+	helpers.WriteToOsFile(f, nodes)
+	helpers.WriteToOsFile(f, dependencies)
 	f.WriteString("@enduml")
 	defer f.Close()
 
