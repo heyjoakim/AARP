@@ -1,8 +1,10 @@
 package main
 
 import (
+	"github.com/heyjoakim/AARP/data"
 	"github.com/heyjoakim/AARP/helpers"
 	"github.com/heyjoakim/AARP/logic"
+	"github.com/heyjoakim/AARP/set"
 	log "github.com/sirupsen/logrus"
 	"os"
 )
@@ -25,10 +27,10 @@ func main() {
 
 	for _, j := range *fileSlice {
 		file, imports := helpers.ReadLines(j)
-		dependencies, nodes = helpers.WriteToSet(dependencies, nodes, file, imports)
+		dependencies, nodes = set.WriteToSet(dependencies, nodes, file, imports)
 	}
-	helpers.WriteToOsFile(f, nodes)
-	helpers.WriteToOsFile(f, dependencies)
+	data.WriteFile(f, nodes)
+	data.WriteFile(f, dependencies)
 	f.WriteString("@enduml")
 	defer f.Close()
 

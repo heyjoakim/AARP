@@ -2,7 +2,6 @@ package helpers
 
 import (
 	"bufio"
-	"github.com/heyjoakim/AARP/logic"
 	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
@@ -19,7 +18,7 @@ func ReadLines(path string) (cr string, slice []string) {
 	f = f[:len(f)-3]
 	dirLevel := strings.Split(dir, "/")[5]
 	for fs.Scan() {
-		t, err := logic.ExtractImports(fs.Text())
+		t, err := SearchImports(fs.Text())
 		if err == nil {
 			if strings.HasPrefix(t, "zeeguu") {
 				slice = append(slice, strings.Split(t, ".")[0])
