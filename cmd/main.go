@@ -2,6 +2,7 @@ package main
 
 import (
 	"os"
+	"os/exec"
 
 	"github.com/heyjoakim/AARP/data"
 	"github.com/heyjoakim/AARP/helpers"
@@ -24,23 +25,19 @@ func main() {
 	}
 	f.WriteString("@startuml\ntitle Automated Diagram\nskinparam nodesep 100\nskinparam ranksep 100\n")
 
-	dependencies := make(map[string]bool)
-	nodes := make(map[string]bool)
+	dependencies := make(map[string]int)
+	nodes := make(map[string]int)
 
 	for _, j := range *files {
 		f, imports := logic.ReadLines(j)
-		dependencies, nodes = set.WriteToSet(dependencies, nodes, f, imports)
+		dependencies = set.WriteToSet(dependencies, nodes, f, imports)
 	}
 	data.WriteFile(f, nodes)
-	data.WriteFile(f, dependencies)
+	data.WriteFileWithCardinality(f, dependencies)
 	f.WriteString("@enduml")
 	defer f.Close()
 
-	// Requires plantuml binary in cmd folder
-	// cmd := exec.Command("./plantuml", "out/data.wsd")
-	// cmd.Run()
-
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
+	// Requires plantuml binary in cmd
+	cmd := exec.Command("./plantuml", "out/data.wsd")
+	cmd.Run()
 }
