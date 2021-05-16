@@ -38,4 +38,4 @@ The idea of the project is to create models from pre-exisisting tools like plant
 
 End result would be something like the following: 
 
-![](out/data/AutomatedDiagram.png)
+![](cmd/out/data.png)
