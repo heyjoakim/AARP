@@ -1,5 +1,0 @@
-```mermaid
-classDiagram
-zeeguu_api --> zeeguu_core
-zeegu_api --> zeegu_core
-```
