@@ -7,11 +7,11 @@ node zeeguu_core
 node zeeguu_api
 node zeeguu_api_test
 node zeeguu_core_test
+tools --> zeeguu_core : [113]
+zeeguu_api --> zeeguu_core : [52]
+zeeguu_api_test --> zeeguu_core : [9]
 zeeguu_api_test --> zeeguu_core_test : [5]
 zeeguu_api_test --> zeeguu_api : [4]
 zeeguu_core --> zeeguu_api : [1]
 zeeguu_core_test --> zeeguu_core : [78]
-tools --> zeeguu_core : [113]
-zeeguu_api --> zeeguu_core : [52]
-zeeguu_api_test --> zeeguu_core : [9]
 @enduml

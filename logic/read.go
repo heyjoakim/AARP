@@ -2,10 +2,11 @@ package logic
 
 import (
 	"bufio"
-	"github.com/sirupsen/logrus"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/sirupsen/logrus"
 )
 
 func ReadLines(path string) (cr string, slice []string) {
@@ -14,9 +15,9 @@ func ReadLines(path string) (cr string, slice []string) {
 		logrus.Errorf("Opening file causes error: %q\n", err)
 	}
 	fs := bufio.NewScanner(file)
-	dir, f := filepath.Split(path)
-	f = f[:len(f)-3]
+	dir, _ := filepath.Split(path)
 	dirLevel := strings.Split(dir, "/")[5]
+
 	for fs.Scan() {
 		t, err := SearchImports(fs.Text())
 		if err == nil {
@@ -26,5 +27,4 @@ func ReadLines(path string) (cr string, slice []string) {
 		}
 	}
 	return dirLevel, slice
-
 }
