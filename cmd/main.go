@@ -18,7 +18,7 @@ func main() {
 	files := logic.WalkDirs(root, extension, exclusion)
 	helpers.CountFiles(files)
 
-	f, err := os.Create("data.wsd")
+	f, err := os.Create("out/data.wsd")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,4 +36,11 @@ func main() {
 	f.WriteString("@enduml")
 	defer f.Close()
 
+	// Requires plantuml binary in cmd folder
+	// cmd := exec.Command("./plantuml", "out/data.wsd")
+	// cmd.Run()
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 }
